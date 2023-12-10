@@ -9,6 +9,12 @@
 #include "hospital.h"
 using namespace std;
 
+adrDate createElmDate(date tgl){
+    adrDate d = new elmDate;
+    info(d) = tgl
+    next(d) = NULL;
+}
+
 void insertDate(ListDate &LD, adrDate d){
     if (first(LD) == NULL){
         first(LD) = d;
