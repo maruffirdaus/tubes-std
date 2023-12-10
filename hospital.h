@@ -5,7 +5,7 @@
 #define first(L) (L).first
 #define info(P) (P)->info
 #define next(P) (P)->next
-#define babyList(P) (P).babyList
+#define babyList(P) (P)->babyList
 #define prev(P) (P)->prev
 
 using namespace std;
@@ -38,7 +38,7 @@ struct ListDate
 
 void insertDate(ListDate &LD, adrDate d);
 void showDate(ListDate LD);
-void deleteDate(ListDate &LD);
+void deleteDate(ListDate &LD, date d);
 adrDate searchDate(ListDate LD, date d);
 void insertBaby(ListBaby &LB, adrBaby b);
 void connectList(ListDate &LD, ListBaby LB);
