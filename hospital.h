@@ -36,6 +36,7 @@ struct ListDate
     adrDate first;
 };
 
+adrDate createElmDate(date tgl);
 void insertDate(ListDate &LD, adrDate d);
 void showDate(ListDate LD);
 void deleteDate(ListDate &LD, date d);

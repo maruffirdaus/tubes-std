@@ -1,5 +1,11 @@
 #include "hospital.h"
 
+adrDate createElmDate(date tgl){
+    adrDate d = new elmDate;
+    info(d) = tgl
+    next(d) = NULL;
+}
+
 void insertDate(ListDate &LD, adrDate d)
 {
     if (first(LD) != NULL) {
@@ -38,3 +44,11 @@ void deleteDate(ListDate &LD, date d)
         }
     }
 }
+
+adrDate searchDate(ListDate LD, date d);
+void insertBaby(ListBaby &LB, adrBaby b);
+void connectList(ListDate &LD, ListBaby LB);
+void showAll(ListDate LD);
+adrBaby searchBaby(ListDate LD, date d, name b);
+void deleteBaby(ListDate &LD, date d, name b);
+void showLowestBirthRate(ListDate LD);
