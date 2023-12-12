@@ -86,5 +86,8 @@ adrBaby searchBaby(ListDate LD, date d, name b){
 
 }
 
-void deleteBaby(ListDate &LD, date d, name b);
+void deleteBaby(ListDate &LD, date d, name b){
+    adrBaby pBayi = adrsearchBaby(LD,d,b);
+
+}
 void showLowestBirthRate(ListDate LD);
