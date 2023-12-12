@@ -45,7 +45,14 @@ void deleteDate(ListDate &LD, date d)
     }
 }
 
-adrDate searchDate(ListDate LD, date d);
+adrDate searchDate(ListDate LD, date d){
+    adrDate datePointer = first(LD);
+    while (info(datePointer) != d and datePointer != NULL){
+        datePointer = next(datePointer);
+    }
+    return datePointer;
+}
+
 void insertBaby(ListBaby &LB, adrBaby b);
 void connectList(ListDate &LD, ListBaby LB);
 void showAll(ListDate LD);
