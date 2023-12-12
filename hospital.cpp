@@ -53,7 +53,23 @@ adrDate searchDate(ListDate LD, date d){
     return datePointer;
 }
 
-void insertBaby(ListBaby &LB, adrBaby b);
+void insertBaby(ListBaby &LB, adrBaby b){
+    adrBaby Q = first(LB);
+    if (first(LB) == NULL){
+        first(LB) = b;
+        next(b) = b;
+    }else if(next(first(LB)) == first(LB)) {
+        next(first(LB)) = b;
+        next(b) = first(LB);
+    }else {
+        do
+        {
+            Q = next(Q);
+        } while (next(Q) != first(LB));
+        next(Q) = b;
+        next(b) = first(LB);
+    }
+}
 void connectList(ListDate &LD, ListBaby LB);
 void showAll(ListDate LD);
 adrBaby searchBaby(ListDate LD, date d, name b);
