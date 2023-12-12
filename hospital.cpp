@@ -71,6 +71,20 @@ void insertBaby(ListBaby &LB, adrBaby b){
 }
 void connectList(ListDate &LD, ListBaby LB);
 void showAll(ListDate LD);
-adrBaby searchBaby(ListDate LD, date d, name b);
+
+adrBaby searchBaby(ListDate LD, date d, name b){
+    adrDate tgl = searchDate(LD,d);
+    if (tgl != NULL){
+        adrBaby pBayi = first(babyList(LD));
+        while (pBayi != NULL and info(pBayi) != b){
+            pBayi = next(pBayi);
+        }
+        return pBayi;
+    }else{
+        return NULL;
+    }
+
+}
+
 void deleteBaby(ListDate &LD, date d, name b);
 void showLowestBirthRate(ListDate LD);
