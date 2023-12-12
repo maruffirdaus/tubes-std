@@ -1,8 +1,8 @@
 #include "hospital.h"
 
-adrDate createElmDate(date tgl){
+adrDate createElmDate(string tgl){
     adrDate d = new elmDate;
-    info(d) = tgl
+    info(d) = tgl;
     next(d) = NULL;
 }
 
