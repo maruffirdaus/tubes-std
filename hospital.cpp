@@ -58,16 +58,15 @@ void insertBaby(ListBaby &LB, adrBaby b){
     if (first(LB) == NULL){
         first(LB) = b;
         next(b) = b;
+        prev(b) = b;
     }else if(next(first(LB)) == first(LB)) {
         next(first(LB)) = b;
         next(b) = first(LB);
+        prev(first(LB)) = b;
     }else {
-        do
-        {
-            Q = next(Q);
-        } while (next(Q) != first(LB));
-        next(Q) = b;
+        next(prev(first(LB))) = b;
         next(b) = first(LB);
+        prev(first(LB)) = b;
     }
 }
 void connectList(ListDate &LD, ListBaby LB);
