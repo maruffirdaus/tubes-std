@@ -198,4 +198,5 @@ void showLowestBirthRate(ListDate LD){
         pTgl = next(pTgl);
     }
     cout << info(pMin) << endl; 
+    
 }
