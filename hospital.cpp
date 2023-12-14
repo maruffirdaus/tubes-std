@@ -31,19 +31,42 @@ void deleteDate(ListDate &LD, date d)
 {
     adrDate datePointer = searchDate(LD, d);
 
-    if (first(babyList(datePointer)) != NULL) {
-        while (first(babyList(datePointer)) != NULL) {
-            adrBaby b = prev(first(babyList(datePointer));
-            if (first(babyList(datePointer) != b) {
-                prev(first(babyList(datePointer)) = prev(b);
-                next(prev(b)) = first(babyList(datePointer));
+    if (first(LD) != NULL) {
+        adrDate datePointer = searchDate(LD, d);
+        if (first(LD) != datePointer && next(datePointer) != NULL) {
+            adrDate d = first(LD);
+            while (next(d) != datePointer) {
+                d = next(d);
+            }
+            next(d) = next(datePointer);
+        } else if (next(datePointer) != NULL) {
+            first(LD) = next(datePointer);
+        } else if (first(LD) != datePointer) {
+            adrDate d = first(LD);
+            while (next(d) != datePointer) {
+                d = next(d);
+            }
+            next(d) = NULL;
+        } else {
+            first(LD) = NULL;
+        }
+        next(datePointer) = NULL;
+        ListBaby LB = babyList(datePointer);
+        delete datePointer;
+        while (first(LB) != NULL) {
+            adrBaby b = first(LB);
+            if (next(b) == b) {
+                first(LB) = NULL;
             } else {
-                first(babyList(datePointer)) = NULL;
+                first(LB) = next(b);
+                prev(first(LB)) = prev(b);
+                next(prev(b)) = first(LB);
             }
             delete b;
         }
     }
 }
+
 
 adrDate searchDate(ListDate LD, date d){
     adrDate datePointer = first(LD);
@@ -87,7 +110,8 @@ adrBaby searchBaby(ListDate LD, date d, name b){
 }
 
 void deleteBaby(ListDate &LD, date d, name b){
-    adrBaby pBayi = adrsearchBaby(LD,d,b);
+    adrBaby pBayi = searchBaby(LD,d,b);
+    adrBaby q; 
 
 }
 void showLowestBirthRate(ListDate LD);
