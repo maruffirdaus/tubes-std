@@ -253,6 +253,6 @@ void showLowestBirthRate(ListDate LD)
     }
     cout << "  Tanggal dengan Kelahiran Terendah" << endl;
     cout << "--------------------------------" << endl;
-    cout << info(pMin) << endl;
+    cout << "Tanggal " << info(pMin) << " sebanyak " << min << " kelahiran." << endl;
     cout << "--------------------------------" << endl;
 }
