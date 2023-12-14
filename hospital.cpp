@@ -135,7 +135,7 @@ void connectList(adrBaby b, ListDate &LD, date d)
         babyList(pDateNull) = LB;
     } else {
         if (first(babyList(pDate)) == NULL) {
-            ListBaby LB;
+            ListBaby LB = babyList(pDate);
             first(LB) = createElmBaby(info(b));
             next(first(LB)) = first(LB);
             prev(first(LB)) = first(LB);
@@ -189,24 +189,46 @@ adrBaby searchBaby(ListBaby LB, name b)
     }
 }
 
-void deleteBaby(ListDate &LD, date d, name b)
+void deleteBaby(ListDate &LD, date d, ListBaby &LB, name b)
 {
-    adrDate pDate = searchDate(LD,d);
-    adrBaby pBaby = searchBaby(LD,d,b);
-    adrBaby firstB = first(babyList(pDate));
-
-    if (next(pBaby) == firstB){
-        next(firstB) = prev(pBaby);
-        next(prev(pBaby)) = firstB;
-    }else if (firstB == pBaby){
-        prev(next(pBaby)) = prev(firstB);
-        next(prev(firstB)) = next(pBaby);
-        first(babyList(pDate)) = next(pBaby);
-        next(pBaby) = NULL;
-    }else{
-        next(prev(pBaby)) = next(pBaby);
-        prev(next(pBaby)) = prev(pBaby);
-        prev(pBaby) = NULL ; next(pBaby) = NULL;
+    adrDate pDate = searchDate(LD, d);
+    if (pDate != NULL) {
+        ListBaby LBTemp = babyList(pDate);
+        if (first(LBTemp) != NULL) {
+            adrBaby pBaby = searchBaby(LBTemp, b);
+            if (pBaby != NULL) {
+                if (first(LBTemp) != pBaby && next(pBaby) != first(LBTemp)) {
+                    next(prev(pBaby)) = next(pBaby);
+                    prev(next(pBaby)) = prev(pBaby);
+                } else if (next(pBaby) != first(LBTemp)) {
+                    first(LBTemp) = next(pBaby);
+                    prev(first(LBTemp)) = prev(pBaby);
+                    next(prev(pBaby)) = first(LBTemp);
+                } else if (first(LBTemp) != pBaby) {
+                    next(prev(pBaby)) = first(LBTemp);
+                    prev(first(LBTemp)) = prev(pBaby);
+                } else {
+                    first(babyList(pDate)) = NULL;
+                }
+            }
+            pBaby = searchBaby(LB, b);
+            if (pBaby != NULL) {
+                if (first(LB) != pBaby && next(pBaby) != first(LB)) {
+                    next(prev(pBaby)) = next(pBaby);
+                    prev(next(pBaby)) = prev(pBaby);
+                } else if (next(pBaby) != first(LB)) {
+                    first(LB) = next(pBaby);
+                    prev(first(LB)) = prev(pBaby);
+                    next(prev(pBaby)) = first(LB);
+                } else if (first(LB) != pBaby) {
+                    next(prev(pBaby)) = first(LB);
+                    prev(first(LB)) = prev(pBaby);
+                } else {
+                    first(LB) = NULL;
+                }
+            }
+            delete pBaby;
+        }
     }
 }
 

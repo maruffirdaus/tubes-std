@@ -40,13 +40,13 @@ adrDate createElmDate(date d);
 adrBaby createElmBaby(name b);
 void insertDate(ListDate &LD, adrDate d);
 void showDate(ListDate LD);
-void deleteDate(ListDate &LD, date d);
+void deleteDate(ListDate &LD, date d, ListBaby &LB);
 adrDate searchDate(ListDate LD, date d);
-void insertBaby(ListBaby &LB, adrBaby b);
-void connectList(ListDate &LD, ListBaby LB);
+void insertBaby(ListBaby &LB, name b, ListDate &LD, date d);
+void connectList(adrBaby b, ListDate &LD, date d);
 void showAll(ListDate LD);
-adrBaby searchBaby(ListDate LD, date d, name b);
-void deleteBaby(ListDate &LD, date d, name b);
+adrBaby searchBaby(ListBaby LB, name b);
+void deleteBaby(ListDate &LD, date d, ListBaby &LB, name b);
 void showLowestBirthRate(ListDate LD);
 
 #endif
