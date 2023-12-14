@@ -98,7 +98,7 @@ void showAll(ListDate LD);
 adrBaby searchBaby(ListDate LD, date d, name b){
     adrDate tgl = searchDate(LD,d);
     if (tgl != NULL){
-        adrBaby pBayi = first(babyList(LD));
+        adrBaby pBayi = first(babyList(tgl));
         while (pBayi != NULL and info(pBayi) != b){
             pBayi = next(pBayi);
         }
@@ -110,8 +110,25 @@ adrBaby searchBaby(ListDate LD, date d, name b){
 }
 
 void deleteBaby(ListDate &LD, date d, name b){
+    adrDate pTgl = searchDate(LD,d);
     adrBaby pBayi = searchBaby(LD,d,b);
-    adrBaby q; 
+    adrBaby firstB = first(babyList(pTgl));
+
+    if (next(pBayi) == firstB){
+        next(firstB) = prev(pBayi);
+        next(prev(pBayi)) = firstB;
+    }else if (firstB == pBayi){
+        prev(next(pBayi)) = prev(firstB);
+        next(prev(firstB)) = next(pBayi);
+        first(babyList(pTgl)) = next(pBayi);
+        next(pBayi) = NULL;
+    }else{
+        next(prev(pBayi)) = next(pBayi);
+        prev(next(pBayi)) = prev(pBayi);
+        prev(pBayi) = NULL ; next(pBayi) = NULL;
+    }
+
+    
 
 }
 void showLowestBirthRate(ListDate LD);
