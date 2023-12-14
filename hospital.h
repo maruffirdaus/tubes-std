@@ -36,7 +36,8 @@ struct ListDate
     adrDate first;
 };
 
-adrDate createElmDate(string tgl);
+adrDate createElmDate(date d);
+adrBaby createElmBaby(name b);
 void insertDate(ListDate &LD, adrDate d);
 void showDate(ListDate LD);
 void deleteDate(ListDate &LD, date d);

@@ -1,17 +1,19 @@
 #include "hospital.h"
 
-adrDate createElmDate(date tgl){
-    adrDate d = new elmDate;
-    info(d) = tgl;
-    next(d) = NULL;
-    return d;
+adrDate createElmDate(date d)
+{
+    adrDate pDate = new elmDate;
+    info(pDate) = d;
+    next(pDate) = NULL;
+    return pDate;
 }
 
-adrBaby createElmBaby(name n){
-    adrBaby b = new elmBaby;
-    info(b) = n;
-    next(b) = NULL;
-    return b;
+adrBaby createElmBaby(name b)
+{
+    adrBaby pBaby = new elmBaby;
+    info(pBaby) = b;
+    next(pBaby) = NULL;
+    return pBaby;
 }
 
 void insertDate(ListDate &LD, adrDate d)
@@ -28,175 +30,207 @@ void showDate(ListDate LD)
 {
     if (first(LD) != NULL) {
         adrDate d = first(LD);
-        cout << " Daftar Tanggal" << endl;
+        cout << "  Daftar Tanggal" << endl;
         cout << "--------------------------------" << endl;
         while (d != NULL) {
-            cout << "Tanggal: " << info(d) << endl;
+            cout << info(d) << endl;
             d = next(d);
         }
         cout << "--------------------------------" << endl;
     }
 }
 
-void deleteDate(ListDate &LD, date d)
+void deleteDate(ListDate &LD, date d, ListBaby &LB)
 {
-    adrDate datePointer = searchDate(LD, d);
-
+    adrDate pDate = searchDate(LD, d);
     if (first(LD) != NULL) {
-        adrDate datePointer = searchDate(LD, d);
-        if (first(LD) != datePointer && next(datePointer) != NULL) {
+        adrDate pDate = searchDate(LD, d);
+        if (first(LD) != pDate && next(pDate) != NULL) {
             adrDate d = first(LD);
-            while (next(d) != datePointer) {
+            while (next(d) != pDate) {
                 d = next(d);
             }
-            next(d) = next(datePointer);
-        } else if (next(datePointer) != NULL) {
-            first(LD) = next(datePointer);
-        } else if (first(LD) != datePointer) {
+            next(d) = next(pDate);
+        } else if (next(pDate) != NULL) {
+            first(LD) = next(pDate);
+        } else if (first(LD) != pDate) {
             adrDate d = first(LD);
-            while (next(d) != datePointer) {
+            while (next(d) != pDate) {
                 d = next(d);
             }
             next(d) = NULL;
         } else {
             first(LD) = NULL;
         }
-        next(datePointer) = NULL;
-        ListBaby LB = babyList(datePointer);
-        delete datePointer;
-        while (first(LB) != NULL) {
-            adrBaby b = first(LB);
+        next(pDate) = NULL;
+        ListBaby LBTemp = babyList(pDate);
+        delete pDate;
+        while (first(LBTemp) != NULL) {
+            adrBaby b = first(LBTemp);
             if (next(b) == b) {
-                first(LB) = NULL;
+                first(LBTemp) = NULL;
             } else {
-                first(LB) = next(b);
-                prev(first(LB)) = prev(b);
-                next(prev(b)) = first(LB);
+                first(LBTemp) = next(b);
+                prev(first(LBTemp)) = prev(b);
+                next(prev(b)) = first(LBTemp);
+            }
+            adrBaby pBaby = searchBaby(LB, info(b));
+            if (pBaby != NULL) {
+                if (first(LB) != pBaby && next(pBaby) != first(LB)) {
+                    next(prev(pBaby)) = next(pBaby);
+                    prev(next(pBaby)) = prev(pBaby);
+                } else if (next(pBaby) != first(LB)) {
+                    first(LB) = next(pBaby);
+                    prev(first(LB)) = prev(pBaby);
+                    next(prev(pBaby)) = first(LB);
+                } else if (first(LB) != pBaby) {
+                    next(prev(pBaby)) = first(LB);
+                    prev(first(LB)) = prev(pBaby);
+                } else {
+                    first(LB) = NULL;
+                }
+                delete pBaby;
             }
             delete b;
         }
     }
 }
 
-
-adrDate searchDate(ListDate LD, date d){
-    adrDate datePointer = first(LD);
-    while (info(datePointer) != d and datePointer != NULL){
-        datePointer = next(datePointer);
-    }
-    return datePointer;
-}
-
-void insertBaby(ListDate &LD, date tgl, name n){
-    adrDate d = searchDate(LD, tgl);
-
-    if (d == NULL) {
-        insertDate(LD, d);
-        ListBaby LB;
-        first(LB) = createElmBaby(n);
-        connectList(d, LB);
-    } else {
-        ListBaby LB = babyList(d);
-        adrBaby
-    }
-
-    /*adrBaby Q = first(LB);
-    if (first(LB) == NULL){
-        first(LB) = b;
-        next(b) = b;
-        prev(b) = b;
-    }else if(next(first(LB)) == first(LB)) {
-        next(first(LB)) = b;
-        next(b) = first(LB);
-        prev(first(LB)) = b;
-    }else {
-        next(prev(first(LB))) = b;
-        next(b) = first(LB);
-        prev(first(LB)) = b;
-    }*/
-}
-
-void connectList(adrDate d, ListBaby LB)
+adrDate searchDate(ListDate LD, date d)
 {
-    babyList(d) = LB;
+    adrDate pDate = first(LD);
+    while (info(pDate) != d and pDate != NULL){
+        pDate = next(pDate);
+    }
+    return pDate;
+}
+
+void insertBaby(ListBaby &LB, name b, ListDate &LD, date d)
+{
+    adrBaby pBaby = createElmBaby(b);
+    if (first(LB) == NULL) {
+        first(LB) = pBaby;
+        next(first(LB)) = first(LB);
+        prev(first(LB)) = first(LB);
+    } else {
+        next(pBaby) = first(LB);
+        prev(pBaby) = prev(first(LB));
+        prev(first(LB)) = pBaby;
+        next(prev(pBaby)) = pBaby;
+        first(LB) = pBaby;
+    }
+    connectList(pBaby, LD, d);
+}
+
+void connectList(adrBaby b, ListDate &LD, date d)
+{
+    adrDate pDate = searchDate(LD, d);
+    if (pDate == NULL) {
+        adrDate pDateNull = createElmDate(d);
+        insertDate(LD, pDateNull);
+        ListBaby LB;
+        first(LB) = createElmBaby(info(b));
+        next(first(LB)) = first(LB);
+        prev(first(LB)) = first(LB);
+        babyList(pDateNull) = LB;
+    } else {
+        if (first(babyList(pDate)) == NULL) {
+            ListBaby LB;
+            first(LB) = createElmBaby(info(b));
+            next(first(LB)) = first(LB);
+            prev(first(LB)) = first(LB);
+            babyList(pDate) = LB;
+        } else {
+            ListBaby LB = babyList(pDate);
+            adrBaby pBaby = createElmBaby(info(b));
+            next(pBaby) = first(LB);
+            prev(pBaby) = prev(first(LB));
+            prev(first(LB)) = pBaby;
+            next(prev(pBaby)) = pBaby;
+            first(LB) = pBaby;
+        }
+    }
 }
 
 void showAll(ListDate LD)
 {
     if (first(LD) != NULL) {
         adrDate d = first(LD);
-        cout << " Daftar Tanggal dan Bayi yang Lahir" << endl;
+        cout << "  Daftar Tanggal dan Bayi yang Lahir" << endl;
         cout << "--------------------------------" << endl;
         while (d != NULL) {
-            cout << "Tanggal: " << info(d) << endl;
+            cout << " Tanggal: " << info(d) << endl;
+            cout << "----------------" << endl;
             ListBaby LB = babyList(d);
             adrBaby b = first(LB);
             int i = 1;
-            while (b != NULL) {
-                cout << "Nama bayi " << i << " : " << info(b) << endl;
+            do {
+                cout << " Nama bayi " << i << " : " << info(b) << endl;
                 b = next(b);
                 i++;
-            }
+            } while (b != first(LB));
             cout << endl;
+            d = next(d);
         }
         cout << "--------------------------------" << endl;
     }
 }
 
-adrBaby searchBaby(ListDate LD, date d, name b){
-    adrDate tgl = searchDate(LD,d);
-    if (tgl != NULL){
-        adrBaby pBayi = first(babyList(tgl));
-        while (pBayi != NULL and info(pBayi) != b){
-            pBayi = next(pBayi);
-        }
-        return pBayi;
-    }else{
+adrBaby searchBaby(ListBaby LB, name b)
+{
+    adrBaby pBaby = first(LB);
+    while (info(pBaby) != b && next(pBaby) != first(LB)) {
+        pBaby = next(pBaby);
+    }
+    if (info(pBaby) == b) {
+        return pBaby;
+    } else {
         return NULL;
     }
-
 }
 
-void deleteBaby(ListDate &LD, date d, name b){
-    adrDate pTgl = searchDate(LD,d);
-    adrBaby pBayi = searchBaby(LD,d,b);
-    adrBaby firstB = first(babyList(pTgl));
+void deleteBaby(ListDate &LD, date d, name b)
+{
+    adrDate pDate = searchDate(LD,d);
+    adrBaby pBaby = searchBaby(LD,d,b);
+    adrBaby firstB = first(babyList(pDate));
 
-    if (next(pBayi) == firstB){
-        next(firstB) = prev(pBayi);
-        next(prev(pBayi)) = firstB;
-    }else if (firstB == pBayi){
-        prev(next(pBayi)) = prev(firstB);
-        next(prev(firstB)) = next(pBayi);
-        first(babyList(pTgl)) = next(pBayi);
-        next(pBayi) = NULL;
+    if (next(pBaby) == firstB){
+        next(firstB) = prev(pBaby);
+        next(prev(pBaby)) = firstB;
+    }else if (firstB == pBaby){
+        prev(next(pBaby)) = prev(firstB);
+        next(prev(firstB)) = next(pBaby);
+        first(babyList(pDate)) = next(pBaby);
+        next(pBaby) = NULL;
     }else{
-        next(prev(pBayi)) = next(pBayi);
-        prev(next(pBayi)) = prev(pBayi);
-        prev(pBayi) = NULL ; next(pBayi) = NULL;
+        next(prev(pBaby)) = next(pBaby);
+        prev(next(pBaby)) = prev(pBaby);
+        prev(pBaby) = NULL ; next(pBaby) = NULL;
     }
-
-    
-
 }
-void showLowestBirthRate(ListDate LD){
+
+void showLowestBirthRate(ListDate LD)
+{
     adrDate pMin;
     int i;
     int min = 9999999999999999;
-    adrDate pTgl = first(LD);
-    while (pTgl != NULL) {
+    adrDate pDate = first(LD);
+    while (pDate != NULL) {
         i = 0;
-        adrBaby pBayi = first(babyList(pTgl));
-        while (pBayi != NULL){
+        adrBaby pBaby = first(babyList(pDate));
+        do {
             i++;
-            pBayi = next(pBayi);
-        }
-        if (i < min){
-            pMin = pTgl ; 
+            pBaby = next(pBaby);
+        } while (pBaby != first(babyList(pDate)));
+        if (i < min) {
+            pMin = pDate ; 
             min = i ;
         }
-        pTgl = next(pTgl);
+        pDate = next(pDate);
     }
-    cout << info(pMin) << endl; 
-    
+    cout << "  Tanggal dengan Kelahiran Terendah" << endl;
+    cout << "--------------------------------" << endl;
+    cout << info(pMin) << endl;
+    cout << "--------------------------------" << endl;
 }
