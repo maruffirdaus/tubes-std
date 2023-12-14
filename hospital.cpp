@@ -131,4 +131,6 @@ void deleteBaby(ListDate &LD, date d, name b){
     
 
 }
-void showLowestBirthRate(ListDate LD);
+void showLowestBirthRate(ListDate LD){
+    
+}
