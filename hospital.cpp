@@ -4,6 +4,14 @@ adrDate createElmDate(date tgl){
     adrDate d = new elmDate;
     info(d) = tgl;
     next(d) = NULL;
+    return d;
+}
+
+adrBaby createElmBaby(name n){
+    adrBaby b = new elmBaby;
+    info(b) = n;
+    next(b) = NULL;
+    return b;
 }
 
 void insertDate(ListDate &LD, adrDate d)
@@ -20,10 +28,13 @@ void showDate(ListDate LD)
 {
     if (first(LD) != NULL) {
         adrDate d = first(LD);
+        cout << " Daftar Tanggal" << endl;
+        cout << "--------------------------------" << endl;
         while (d != NULL) {
-            cout << info(d) << endl;
+            cout << "Tanggal: " << info(d) << endl;
             d = next(d);
         }
+        cout << "--------------------------------" << endl;
     }
 }
 
@@ -76,8 +87,20 @@ adrDate searchDate(ListDate LD, date d){
     return datePointer;
 }
 
-void insertBaby(ListBaby &LB, adrBaby b){
-    adrBaby Q = first(LB);
+void insertBaby(ListDate &LD, date tgl, name n){
+    adrDate d = searchDate(LD, tgl);
+
+    if (d == NULL) {
+        insertDate(LD, d);
+        ListBaby LB;
+        first(LB) = createElmBaby(n);
+        connectList(d, LB);
+    } else {
+        ListBaby LB = babyList(d);
+        adrBaby
+    }
+
+    /*adrBaby Q = first(LB);
     if (first(LB) == NULL){
         first(LB) = b;
         next(b) = b;
@@ -90,10 +113,35 @@ void insertBaby(ListBaby &LB, adrBaby b){
         next(prev(first(LB))) = b;
         next(b) = first(LB);
         prev(first(LB)) = b;
+    }*/
+}
+
+void connectList(adrDate d, ListBaby LB)
+{
+    babyList(d) = LB;
+}
+
+void showAll(ListDate LD)
+{
+    if (first(LD) != NULL) {
+        adrDate d = first(LD);
+        cout << " Daftar Tanggal dan Bayi yang Lahir" << endl;
+        cout << "--------------------------------" << endl;
+        while (d != NULL) {
+            cout << "Tanggal: " << info(d) << endl;
+            ListBaby LB = babyList(d);
+            adrBaby b = first(LB);
+            int i = 1;
+            while (b != NULL) {
+                cout << "Nama bayi " << i << " : " << info(b) << endl;
+                b = next(b);
+                i++;
+            }
+            cout << endl;
+        }
+        cout << "--------------------------------" << endl;
     }
 }
-void connectList(ListDate &LD, ListBaby LB);
-void showAll(ListDate LD);
 
 adrBaby searchBaby(ListDate LD, date d, name b){
     adrDate tgl = searchDate(LD,d);
@@ -131,4 +179,23 @@ void deleteBaby(ListDate &LD, date d, name b){
     
 
 }
-void showLowestBirthRate(ListDate LD);
+void showLowestBirthRate(ListDate LD){
+    adrDate pMin;
+    int i;
+    int min = 9999999999999999;
+    adrDate pTgl = first(LD);
+    while (pTgl != NULL) {
+        i = 0;
+        adrBaby pBayi = first(babyList(pTgl));
+        while (pBayi != NULL){
+            i++;
+            pBayi = next(pBayi);
+        }
+        if (i < min){
+            pMin = pTgl ; 
+            min = i ;
+        }
+        pTgl = next(pTgl);
+    }
+    cout << info(pMin) << endl; 
+}
