@@ -1,7 +1,8 @@
 #include "hospital.h"
 #include "menu.cpp"
 
-int main(){
+int main()
+{
     ListDate LD; first(LD) = NULL;
     ListBaby LB; first(LB) = NULL;
 

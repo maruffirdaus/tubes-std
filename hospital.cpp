@@ -29,17 +29,19 @@ void insertDate(ListDate &LD, adrDate d)
 
 void showDate(ListDate LD)
 {
+    cout << "  Daftar Tanggal" << endl;
+    cout << "--------------------------------" << endl << endl;
     if (first(LD) != NULL) {
         adrDate d = first(LD);
-        cout << "  Daftar Tanggal" << endl;
-        cout << "--------------------------------" << endl << endl;
         while (d != NULL) {
             cout << " " << info(d) << endl;
             d = next(d);
         }
         cout << endl;
-        cout << "--------------------------------" << endl << endl;
+    } else {
+        cout << " Data tanggal kelahiran kosong." << endl << endl;
     }
+    cout << "--------------------------------" << endl << endl;
 }
 
 void deleteDate(ListDate &LD, date d, ListBaby &LB)
@@ -100,11 +102,19 @@ void deleteDate(ListDate &LD, date d, ListBaby &LB)
 
 adrDate searchDate(ListDate LD, date d)
 {
-    adrDate pDate = first(LD);
-    while (info(pDate) != d and pDate != NULL){
-        pDate = next(pDate);
+    if (first(LD) != NULL) {
+        adrDate pDate = first(LD);
+        while (info(pDate) != d && next(pDate) != NULL){
+            pDate = next(pDate);
+        }
+        if (info(pDate) == d) {
+            return pDate;
+        } else {
+            return NULL;
+        }
+    } else {
+        return NULL;
     }
-    return pDate;
 }
 
 void insertBaby(ListBaby &LB, name b, ListDate &LD, date d)
@@ -156,19 +166,18 @@ void connectList(adrBaby b, ListDate &LD, date d)
 
 void showAll(ListDate LD)
 {
+    cout << "  Daftar Tanggal dan Bayi yang Lahir" << endl;
+    cout << "--------------------------------" << endl << endl;
     if (first(LD) != NULL) {
         adrDate d = first(LD);
-        cout << "  Daftar Tanggal dan Bayi yang Lahir" << endl;
-        cout << "--------------------------------" << endl << endl;
         while (d != NULL) {
             cout << " Tanggal: " << info(d) << endl;
-            cout << "----------------" << endl << endl;
             ListBaby LB = babyList(d);
             if (first(LB) != NULL) {
                 adrBaby b = first(LB);
                 int i = 1;
                 do {
-                    cout << " Nama bayi " << i << " : " << info(b) << endl;
+                    cout << " " << i << ". " << info(b) << endl;
                     b = next(b);
                     i++;
                 } while (b != first(LB));
@@ -178,8 +187,10 @@ void showAll(ListDate LD)
             cout << endl;
             d = next(d);
         }
-        cout << "--------------------------------" << endl << endl;
+    } else {
+        cout << " Data tanggal kelahiran kosong." << endl << endl;
     }
+    cout << "--------------------------------" << endl << endl;
 }
 
 adrBaby searchBaby(ListBaby LB, name b)
@@ -240,25 +251,31 @@ void deleteBaby(ListDate &LD, date d, ListBaby &LB, name b)
 
 void showLowestBirthRate(ListDate LD)
 {
+    cout << "  Tanggal dengan Kelahiran Terendah" << endl;
+    cout << "--------------------------------" << endl << endl;
+    if (first(LD) != NULL) { 
     adrDate pMin;
     int i;
     int min = 1874919423;
     adrDate pDate = first(LD);
     while (pDate != NULL) {
         i = 0;
+        if (first(babyList(pDate)) != NULL) {
         adrBaby pBaby = first(babyList(pDate));
-        do {
-            i++;
-            pBaby = next(pBaby);
-        } while (pBaby != first(babyList(pDate)));
+            do {
+                i++;
+                pBaby = next(pBaby);
+            } while (pBaby != first(babyList(pDate)));
+        }
         if (i < min) {
             pMin = pDate ; 
             min = i ;
         }
         pDate = next(pDate);
     }
-    cout << "  Tanggal dengan Kelahiran Terendah" << endl;
-    cout << "--------------------------------" << endl << endl;
     cout << " Tanggal " << info(pMin) << " sebanyak " << min << " kelahiran." << endl << endl;
+    } else {
+        cout << " Data tanggal kelahiran kosong." << endl << endl;
+    }
     cout << "--------------------------------" << endl << endl;
 }
