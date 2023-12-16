@@ -5,6 +5,7 @@ adrDate createElmDate(date d)
     adrDate pDate = new elmDate;
     info(pDate) = d;
     next(pDate) = NULL;
+    first(babyList(pDate)) = NULL;
     return pDate;
 }
 
@@ -31,12 +32,13 @@ void showDate(ListDate LD)
     if (first(LD) != NULL) {
         adrDate d = first(LD);
         cout << "  Daftar Tanggal" << endl;
-        cout << "--------------------------------" << endl;
+        cout << "--------------------------------" << endl << endl;
         while (d != NULL) {
-            cout << info(d) << endl;
+            cout << " " << info(d) << endl;
             d = next(d);
         }
-        cout << "--------------------------------" << endl;
+        cout << endl;
+        cout << "--------------------------------" << endl << endl;
     }
 }
 
@@ -157,22 +159,26 @@ void showAll(ListDate LD)
     if (first(LD) != NULL) {
         adrDate d = first(LD);
         cout << "  Daftar Tanggal dan Bayi yang Lahir" << endl;
-        cout << "--------------------------------" << endl;
+        cout << "--------------------------------" << endl << endl;
         while (d != NULL) {
             cout << " Tanggal: " << info(d) << endl;
-            cout << "----------------" << endl;
+            cout << "----------------" << endl << endl;
             ListBaby LB = babyList(d);
-            adrBaby b = first(LB);
-            int i = 1;
-            do {
-                cout << " Nama bayi " << i << " : " << info(b) << endl;
-                b = next(b);
-                i++;
-            } while (b != first(LB));
+            if (first(LB) != NULL) {
+                adrBaby b = first(LB);
+                int i = 1;
+                do {
+                    cout << " Nama bayi " << i << " : " << info(b) << endl;
+                    b = next(b);
+                    i++;
+                } while (b != first(LB));
+            } else {
+                cout << " Tidak terdapat bayi yang lahir pada tanggal ini." << endl;
+            }
             cout << endl;
             d = next(d);
         }
-        cout << "--------------------------------" << endl;
+        cout << "--------------------------------" << endl << endl;
     }
 }
 
@@ -236,7 +242,7 @@ void showLowestBirthRate(ListDate LD)
 {
     adrDate pMin;
     int i;
-    int min = 9999999999999999;
+    int min = 1874919423;
     adrDate pDate = first(LD);
     while (pDate != NULL) {
         i = 0;
@@ -252,7 +258,7 @@ void showLowestBirthRate(ListDate LD)
         pDate = next(pDate);
     }
     cout << "  Tanggal dengan Kelahiran Terendah" << endl;
-    cout << "--------------------------------" << endl;
-    cout << "Tanggal " << info(pMin) << " sebanyak " << min << " kelahiran." << endl;
-    cout << "--------------------------------" << endl;
+    cout << "--------------------------------" << endl << endl;
+    cout << " Tanggal " << info(pMin) << " sebanyak " << min << " kelahiran." << endl << endl;
+    cout << "--------------------------------" << endl << endl;
 }

@@ -1,5 +1,9 @@
 #include "hospital.h"
+#include "menu.cpp"
 
 int main(){
-    cout<<"halo";
+    ListDate LD; first(LD) = NULL;
+    ListBaby LB; first(LB) = NULL;
+
+    mainMenu(LD, LB);
 }
