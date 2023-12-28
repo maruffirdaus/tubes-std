@@ -3,8 +3,9 @@
 
 int main()
 {
-    ListDate LD; first(LD) = NULL;
+    /*ListDate LD; first(LD) = NULL;
     ListBaby LB; first(LB) = NULL;
 
-    mainMenu(LD, LB);
+    mainMenu(LD, LB);*/
+    hospital h; first(h) = NULL;
 }
