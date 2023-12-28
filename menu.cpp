@@ -3,7 +3,7 @@
 
 string opt;
 
-void mainMenu(ListDate &LD, ListBaby &LB)
+void mainMenu(hospital h)
 {
     cout << "  Menu Utama" << endl;
     cout << "--------------------------------" << endl << endl;
@@ -22,10 +22,11 @@ void mainMenu(ListDate &LD, ListBaby &LB)
 
     cout << " Pilih opsi: "; cin >> opt;
     cout << endl;
+    cout << "\033c";
 
     if (opt == "1") {
         cout << "*------------------------------*" << endl << endl;
-        cout << " Isikan tanggal dengan format DD-MONTH-YY, contoh: 22-Desember-2023." << endl << endl;
+        cout << " Isikan tanggal dengan format DD-MONTH-YYYY, contoh: 22-Desember-2023." << endl << endl;
         cout << "*------------------------------*" << endl << endl;
 
         string d;
@@ -33,17 +34,18 @@ void mainMenu(ListDate &LD, ListBaby &LB)
         cout << " Tanggal: "; cin >> d;
         cout << endl;
 
-        insertDate(LD, createElmDate(d));
+        insertDate(h, createElmDate(d));
 
+        cout << "\033c";
         cout << "*------------------------------*" << endl << endl;
         cout << " Data tanggal kelahiran baru berhasil ditambahkan." << endl << endl;
         cout << "*------------------------------*" << endl << endl;
 
-        mainMenu(LD, LB);
+        mainMenu(h);
     } else if (opt == "2") {
-        showDate(LD);
+        showDate(h);
         cout << "*------------------------------*" << endl << endl;
-        cout << " Isikan tanggal yang akan dihapus datanya dengan format DD-MONTH-YY, contoh: 22-Desember-2023." << endl << endl;
+        cout << " Isikan tanggal yang akan dihapus datanya dengan format DD-MONTH-YYYY, contoh: 22-Desember-2023." << endl << endl;
         cout << "*------------------------------*" << endl << endl;
 
         string d;
@@ -51,15 +53,16 @@ void mainMenu(ListDate &LD, ListBaby &LB)
         cout << " Tanggal: "; cin >> d;
         cout << endl;
 
-        deleteDate(LD, d, LB);
+        deleteDate(h, d);
 
+        cout << "\033c";
         cout << "*------------------------------*" << endl << endl;
         cout << " Data tanggal kelahiran terpilih berhasil dihapus." << endl << endl;
         cout << "*------------------------------*" << endl << endl;
 
-        mainMenu(LD, LB);
+        mainMenu(h);
     } else if (opt == "3") {
-        showDate(LD);
+        showDate(h);
         cout << "  Menu" << endl;
         cout << "--------------------------------" << endl << endl;
         cout << " 9. Kembali" << endl;
@@ -68,10 +71,11 @@ void mainMenu(ListDate &LD, ListBaby &LB)
 
         cout << " Pilih opsi: "; cin >> opt;
         cout << endl;
+        cout << "\033c";
 
         if (opt == "0") {
         } else {
-            mainMenu(LD, LB);
+            mainMenu(h);
         }
     } else if (opt == "4") {
         cout << "*------------------------------*" << endl << endl;
@@ -84,7 +88,7 @@ void mainMenu(ListDate &LD, ListBaby &LB)
         cout << endl;
 
         cout << "*------------------------------*" << endl << endl;
-        cout << " Isikan tanggal lahir bayi dengan format DD-MONTH-YY, contoh: 22-Desember-2023." << endl << endl;
+        cout << " Isikan tanggal lahir bayi dengan format DD-MONTH-YYYY, contoh: 22-Desember-2023." << endl << endl;
         cout << "*------------------------------*" << endl << endl;
 
         string d;
@@ -92,17 +96,18 @@ void mainMenu(ListDate &LD, ListBaby &LB)
         cout << " Tanggal: "; cin >> d;
         cout << endl;
 
-        insertBaby(LB, b, LD, d);
+        connectList(h, b, d);
 
+        cout << "\033c";
         cout << "*------------------------------*" << endl << endl;
         cout << " Data bayi baru berhasil ditambahkan." << endl << endl;
         cout << "*------------------------------*" << endl << endl;
 
-        mainMenu(LD, LB);
+        mainMenu(h);
     } else if (opt == "5") {
-        showAll(LD);
+        showAll(h);
         cout << "*------------------------------*" << endl << endl;
-        cout << " Isikan tanggal lahir dari bayi yang akan dihapus datanya dengan format DD-MONTH-YY, contoh: 22-Desember-2023." << endl << endl;
+        cout << " Isikan tanggal lahir dari bayi yang akan dihapus datanya dengan format DD-MONTH-YYYY, contoh: 22-Desember-2023." << endl << endl;
         cout << "*------------------------------*" << endl << endl;
 
         string d;
@@ -119,15 +124,16 @@ void mainMenu(ListDate &LD, ListBaby &LB)
         cout << " Nama: "; cin >> b;
         cout << endl;
 
-        deleteBaby(LD, d, LB, b);
+        deleteBaby(h, d, b);
 
+        cout << "\033c";
         cout << "*------------------------------*" << endl << endl;
         cout << " Data bayi terpilih berhasil dihapus." << endl << endl;
         cout << "*------------------------------*" << endl << endl;
 
-        mainMenu(LD, LB);
+        mainMenu(h);
     } else if (opt == "6") {
-        showAll(LD);
+        showAll(h);
         cout << "  Menu" << endl;
         cout << "--------------------------------" << endl << endl;
         cout << " 9. Kembali" << endl;
@@ -136,13 +142,14 @@ void mainMenu(ListDate &LD, ListBaby &LB)
 
         cout << " Pilih opsi: "; cin >> opt;
         cout << endl;
+        cout << "\033c";
 
         if (opt == "0") {
         } else {
-            mainMenu(LD, LB);
+            mainMenu(h);
         }
     } else if (opt == "7") {
-        showLowestBirthRate(LD);
+        showLowestBirthRate(h);
         cout << "  Menu" << endl;
         cout << "--------------------------------" << endl << endl;
         cout << " 9. Kembali" << endl;
@@ -151,14 +158,14 @@ void mainMenu(ListDate &LD, ListBaby &LB)
 
         cout << " Pilih opsi: "; cin >> opt;
         cout << endl;
+        cout << "\033c";
 
         if (opt == "0") {
         } else {
-            mainMenu(LD, LB);
+            mainMenu(h);
         }
     } else if (opt == "0") {
-
     } else {
-        mainMenu(LD, LB);
+        mainMenu(h);
     }
 }

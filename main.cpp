@@ -3,9 +3,9 @@
 
 int main()
 {
-    /*ListDate LD; first(LD) = NULL;
-    ListBaby LB; first(LB) = NULL;
+    hospital h;
+    first(h) = NULL;
 
-    mainMenu(LD, LB);*/
-    hospital h; first(h) = NULL;
+    cout << "\033c";
+    mainMenu(h);
 }
